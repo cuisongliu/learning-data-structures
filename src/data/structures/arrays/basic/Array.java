@@ -70,13 +70,22 @@ public  class Array<T> {
     public void addLast(T element){
         add(size,element);
     }
+
+    private void resize(int newCapacity){
+        T[] newData = (T[])new Object[newCapacity];
+        for (int i =0;i<size;i++){
+            newData[i] = data[i];
+        }
+        this.data=newData;
+    }
+
     //在第index个位置插入一个新元素
     public void add(int index,T element){
-        if (data.length == size){
-            throw new IllegalArgumentException("Add failed.Array is full.");
-        }
         if (index < 0 || index > size){
             throw new IllegalArgumentException("Add failed.Array is .index >=  0 and index < size.");
+        }
+        if (data.length == size){
+            resize(data.length * 2);
         }
 
         for (int i = size-1;i>=index;i--){
