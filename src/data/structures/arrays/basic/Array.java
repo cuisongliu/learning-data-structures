@@ -75,10 +75,6 @@ public  class Array<T> {
     }
 
     private void resize(Integer newCapacity){
-        if (newCapacity < DEFAULT_CAPACITY){
-            //小于默认值 则按照默认值给定
-            newCapacity = DEFAULT_CAPACITY;
-        }
         T[] newData = (T[])new Object[newCapacity];
         for (int i =0;i<size;i++){
             newData[i] = data[i];
@@ -144,8 +140,9 @@ public  class Array<T> {
         }
         size--;
         data[size] = null; //游离对象 不会内存泄漏 为了让JVM更有效的垃圾回收
-        if (size == data.length/2){
-            resize(size);
+        if (size == data.length/4 && data.length/2 !=0){
+            //解决复杂度震荡问题
+            resize(data.length / 2);
         }
         return (T)ret;
     }
