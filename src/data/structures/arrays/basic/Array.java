@@ -33,14 +33,17 @@ public  class Array<T> {
     private T[] data;
     //第一个没有元素的索引
     private Integer size;
-
+    private static final Integer DEFAULT_CAPACITY = 10;
     public Array(Integer capacity) {
+        if (capacity < 10 ){
+            capacity = DEFAULT_CAPACITY;
+        }
         data = (T[])new Object[capacity];
         size = 0;
     }
 
     public Array() {
-       this(10);
+       this(Array.DEFAULT_CAPACITY);
     }
 
     /**
@@ -71,7 +74,11 @@ public  class Array<T> {
         add(size,element);
     }
 
-    private void resize(int newCapacity){
+    private void resize(Integer newCapacity){
+        if (newCapacity < DEFAULT_CAPACITY){
+            //小于默认值 则按照默认值给定
+            newCapacity = DEFAULT_CAPACITY;
+        }
         T[] newData = (T[])new Object[newCapacity];
         for (int i =0;i<size;i++){
             newData[i] = data[i];
@@ -136,7 +143,10 @@ public  class Array<T> {
             data[i-1]=data[i];
         }
         size--;
-
+        data[size] = null; //游离对象 不会内存泄漏 为了让JVM更有效的垃圾回收
+        if (size == data.length/2){
+            resize(size);
+        }
         return (T)ret;
     }
 
