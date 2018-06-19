@@ -1,4 +1,4 @@
-package data.structures.arrays.basic;
+package data.structures.arrays;
 /*
  * The MIT License (MIT)
  *
