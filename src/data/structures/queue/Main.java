@@ -30,14 +30,28 @@ package data.structures.queue;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayQueue<Integer> queue = new ArrayQueue<>();
+//        ArrayQueue<Integer> queue = new ArrayQueue<>();
+//        for (int i = 0 ;i< 10 ; i ++){
+//            queue.enqueue(i);
+//            System.out.println(queue);
+//        }
+//
+//        queue.dequeue();
+//        System.out.println(queue);
+
+
+
+        LoopQueue<Integer> loopqueue = new LoopQueue<>();
         for (int i = 0 ;i< 10 ; i ++){
-            queue.enqueue(i);
-            System.out.println(queue);
+            loopqueue.enqueue(i);
+            System.out.println(loopqueue);
+            if (i %3 ==2){
+                loopqueue.dequeue();
+                System.out.println(loopqueue);
+            }
+
         }
 
-        queue.dequeue();
-        System.out.println(queue);
     }
 
 }
