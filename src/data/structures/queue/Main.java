@@ -23,11 +23,27 @@ package data.structures.queue;
  * THE SOFTWARE.
  */
 
+import java.util.Random;
+
 /**
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-19 23:06
  */
 public class Main {
+
+    private static double testQueue(Queue<Integer> q,int opCount){
+        long startTime = System.nanoTime();
+        Random random = new Random();
+        for ( int i =0; i < opCount;i++){
+            q.enqueue(random.nextInt(Integer.MAX_VALUE));
+        }
+        for ( int i =0; i < opCount;i++){
+            q.dequeue();
+        }
+        long endTime = System.nanoTime();
+
+        return  (endTime - startTime) / 1000000000.0;
+    }
 
     public static void main(String[] args) {
 //        ArrayQueue<Integer> queue = new ArrayQueue<>();
@@ -41,17 +57,21 @@ public class Main {
 
 
 
-        LoopQueue<Integer> loopqueue = new LoopQueue<>();
-        for (int i = 0 ;i< 10 ; i ++){
-            loopqueue.enqueue(i);
-            System.out.println(loopqueue);
-            if (i %3 ==2){
-                loopqueue.dequeue();
-                System.out.println(loopqueue);
-            }
-
-        }
-
+//        LoopQueue<Integer> loopqueue = new LoopQueue<>();
+//        for (int i = 0 ;i< 10 ; i ++){
+//            loopqueue.enqueue(i);
+//            System.out.println(loopqueue);
+//            if (i %3 ==2){
+//                loopqueue.dequeue();
+//                System.out.println(loopqueue);
+//            }
+//
+//        }
+        Integer optCount = 100000;
+        Queue<Integer> arrayQueue = new ArrayQueue<>();
+        System.out.println("所用時間為1：" + testQueue(arrayQueue,optCount));
+        Queue<Integer> loopQueue= new LoopQueue<>();
+        System.out.println("所用時間為2：" + testQueue(loopQueue,optCount));
     }
 
 }
