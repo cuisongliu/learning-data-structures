@@ -24,15 +24,16 @@ package data.structures.linked;
  */
 
 /**
- * 鏈錶
+ * 虚拟头节点鏈錶
  *
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-21 0:23
  */
-public class LinkedList<E> {
-    private Node head;
+public class LinkedDummyHeadList<E> {
+    private Node dummyHead;
     private Integer size;
-    private class Node{
+
+    private class Node {
         public E e;
         public Node next;
 
@@ -42,11 +43,11 @@ public class LinkedList<E> {
         }
 
         public Node(E e) {
-            this(e,null);
+            this(e, null);
         }
 
         public Node() {
-            this(null,null);
+            this(null, null);
         }
 
         @Override
@@ -55,43 +56,65 @@ public class LinkedList<E> {
         }
     }
 
-    public LinkedList() {
-        head = null;
-        size =  0;
+    public LinkedDummyHeadList() {
+        dummyHead = new Node(null, null);
+        size = 0;
     }
+
     //返回链表中元素的个数
-    public Integer getSize(){
-        return  this.size;
+    public Integer getSize() {
+        return this.size;
     }
+
     //返回链表是否为空
-    public Boolean isEmpty(){
-        return size ==0;
+    public Boolean isEmpty() {
+        return size == 0;
     }
+
     // 在链表头添加元素
-    public void addFirst(E e){
-        head = new Node(e,head);
-        size ++;
+    public void addFirst(E e) {
+        add(e,0);
     }
+
     // 在链表的index(0-based)位置添加新的元素e
     // 在链表的中不是一个常用的操作 练习用
-    public void add(E e,Integer index){
-        if (index < 0 || index > size)
+    public void add(E e, Integer index) {
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Add failed.Illage index.");
-        if (index == 0 ){
-            addFirst(e);
-        }else {
-            Node prev = head;
-            //取到需要更改next地址的值
-            for (int i=0; i < index -1 ;i++){
-                prev = prev.next;
-            }
-            prev.next = new Node(e,prev.next);
-            size ++ ;
+        Node prev = dummyHead;
+        //取到需要更改next地址的值
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
         }
+        prev.next = new Node(e, prev.next);
+        size++;
     }
+
     //在链表末尾添加新的元素 e
-    public void addLast(E e){
-        add(e,this.size);
+    public void addLast(E e) {
+        add(e, this.size);
     }
+
+    // 获得链表的index(0-based)位置的元素e
+    // 在链表的中不是一个常用的操作 练习用
+    public E get(Integer index) {
+        if (index < 0 || index >= size)
+            throw new IllegalArgumentException("Add failed.Illage index.");
+        Node curr = dummyHead.next;
+        //取到需要更改next地址的值
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        return curr.e;
+    }
+
+    public E getFirst(){
+        return get(0);
+    }
+
+    public E getLast(){
+        return get(this.size -1 );
+    }
+
 
 }
