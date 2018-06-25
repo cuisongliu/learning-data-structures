@@ -79,7 +79,7 @@ public class LinkedDummyHeadList<E> {
     // 在链表的index(0-based)位置添加新的元素e
     // 在链表的中不是一个常用的操作 练习用
     public void add(E e, Integer index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index > size)
             throw new IllegalArgumentException("Add failed.Illage index.");
         Node prev = dummyHead;
         //取到需要更改next地址的值
@@ -115,6 +115,41 @@ public class LinkedDummyHeadList<E> {
     public E getLast(){
         return get(this.size -1 );
     }
+    // 设置链表的index(0-based)位置的元素e
+    // 在链表的中不是一个常用的操作 练习用
+    public void set(Integer index,E e) {
+        if (index < 0 || index >= size)
+            throw new IllegalArgumentException("Add failed.Illage index.");
+        Node curr = dummyHead.next;
+        //取到需要更改next地址的值
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        curr.e = e ;
+    }
 
+    // 查找链表中是否有元素e
+    public boolean contains(E e){
+        Node curr = dummyHead.next;
+        //取到需要更改next地址的值
+        while ( curr.next != null){
+            curr = curr.next;
+            if (curr.e.equals(e)){
+                return true;
+            }
+        }
+        return  false;
+    }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Node curr = dummyHead.next;
+        while (curr!=null){
+            sb.append(curr).append("-> ");
+            curr = curr.next;
+        }
+        sb.append("NULL");
+        return sb.toString();
+    }
 }
