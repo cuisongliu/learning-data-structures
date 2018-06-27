@@ -24,22 +24,16 @@ package data.structures.linked;
  */
 
 /**
+ * 栈的抽象接口类
+ *
  * @author cuisongliu [cuisongliu@qq.com]
- * @since 2018-06-25 下午3:59
+ * @since 2018-06-19 22:52
  */
-public class Main {
-    public static void main(String[] args) {
-        LinkedDummyHeadList<Integer> list = new LinkedDummyHeadList<>();
-        for (Integer i = 0 ;i < 10 ;i++){
-            list.addFirst(i);
-            System.out.println(list);
-        }
-        System.out.println(list);
+public interface Stack<E> {
+    Integer getSize();
+    Boolean isEmpty();
+    void push(E e);
+    E pop();
+    E peek();
 
-        list.add(666,3);
-        System.out.println(list);
-        list.remove(10);
-        System.out.println(list);
-
-    }
 }

@@ -24,22 +24,47 @@ package data.structures.linked;
  */
 
 /**
+ * 链表实现栈的数据结构
+ *
  * @author cuisongliu [cuisongliu@qq.com]
- * @since 2018-06-25 下午3:59
+ * @since 2018-06-27 下午12:39
  */
-public class Main {
-    public static void main(String[] args) {
-        LinkedDummyHeadList<Integer> list = new LinkedDummyHeadList<>();
-        for (Integer i = 0 ;i < 10 ;i++){
-            list.addFirst(i);
-            System.out.println(list);
-        }
-        System.out.println(list);
+public class LinkedListStack<E> implements Stack<E>{
+    private LinkedDummyHeadList<E> linkedList;
+    @Override
+    public Integer getSize() {
+        return linkedList.getSize();
+    }
 
-        list.add(666,3);
-        System.out.println(list);
-        list.remove(10);
-        System.out.println(list);
+    public LinkedListStack() {
+        linkedList = new LinkedDummyHeadList<>();
+    }
 
+    @Override
+    public Boolean isEmpty() {
+        return linkedList.isEmpty();
+    }
+
+    @Override
+    public void push(E e) {
+        linkedList.addFirst(e);
+    }
+
+    @Override
+    public E pop() {
+        return linkedList.removeFirst();
+    }
+
+    @Override
+    public E peek() {
+        return linkedList.getFirst();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Stack: top");
+        sb.append(linkedList);
+        return sb.toString();
     }
 }

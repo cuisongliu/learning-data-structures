@@ -128,6 +128,32 @@ public class LinkedDummyHeadList<E> {
         curr.e = e ;
     }
 
+
+    public E remove(Integer index){
+        if (index < 0 || index >= size)
+            throw new IllegalArgumentException("Add failed.Illage index.");
+        Node prev = dummyHead;
+        //取到需要更改next地址的值 待删除之前的节点
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
+        }
+
+        Node retNode = prev.next;
+        prev.next = retNode.next;
+        retNode.next = null;
+        size--;
+        return retNode.e;
+
+    }
+
+    public E removeFirst(){
+        return remove(0);
+    }
+
+    public E removeLast(){
+        return remove(size -1);
+    }
+
     // 查找链表中是否有元素e
     public boolean contains(E e){
         Node curr = dummyHead.next;

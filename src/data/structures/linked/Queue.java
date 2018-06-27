@@ -24,22 +24,16 @@ package data.structures.linked;
  */
 
 /**
+ * 队列接口
+ *
  * @author cuisongliu [cuisongliu@qq.com]
- * @since 2018-06-25 下午3:59
+ * @since 2018-06-20 23:25
  */
-public class Main {
-    public static void main(String[] args) {
-        LinkedDummyHeadList<Integer> list = new LinkedDummyHeadList<>();
-        for (Integer i = 0 ;i < 10 ;i++){
-            list.addFirst(i);
-            System.out.println(list);
-        }
-        System.out.println(list);
+public interface Queue<E> {
 
-        list.add(666,3);
-        System.out.println(list);
-        list.remove(10);
-        System.out.println(list);
-
-    }
+    Integer getSize();
+    Boolean isEmpty();
+    void enqueue(E e);
+    E dequeue();
+    E getFront();
 }
