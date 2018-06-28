@@ -24,33 +24,18 @@ package data.structures.linked.leetcode;
  */
 
 /**
- * 链表的删除操作多个数据
+ * 链表的删除操作多个数据 递归
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-28 下午3:32
  */
-public class Solution {
-    public ListNode removeElements(ListNode head , int val){
-        if (head==null){
-            return  null;
-        }
-        //删除头节点
-        while (head!=null && head.val == val){
-            ListNode delNode = head;
-            head = delNode.next;
-            delNode.next = null;
-        }
-        //删除非头节点
-        ListNode preNode = head;
-        while (preNode.next!=null){
-            if (preNode.next.val==val){
-                ListNode delNode = preNode.next;
-                preNode.next = delNode.next;
-                delNode.next = null;
-            }else {
-                preNode = preNode.next;
-            }
-        }
+public class SolutionSum {
 
-        return head;
+    public static Integer sum(int val){
+        if (val > 0 ) return  val +sum(val-1);
+        else return 0;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(sum(100));
     }
 }
