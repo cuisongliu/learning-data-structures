@@ -28,5 +28,7 @@ package data.structures.linked.leetcode;
  * @since 2018-06-28 下午3:32
  */
 public class Solution {
-
+    public ListNode removeElements(ListNode head , int val){
+        return null;
+    }
 }

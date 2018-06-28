@@ -27,11 +27,11 @@ package data.structures.linked.leetcode;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-28 下午3:31
  */
-public class ListNOde {
+public class ListNode {
     int val;
-    ListNOde next;
+    ListNode next;
 
-    public ListNOde(int x) {
+    public ListNode(int x) {
         val = x ;
     }
 
