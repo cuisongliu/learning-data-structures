@@ -29,16 +29,28 @@ package data.structures.linked;
  */
 public class Main {
     public static void main(String[] args) {
-        LinkedDummyHeadList<Integer> list = new LinkedDummyHeadList<>();
+//        LinkedDummyHeadList<Integer> list = new LinkedDummyHeadList<>();
+//        for (Integer i = 0 ;i < 10 ;i++){
+//            list.addFirst(i);
+//            System.out.println(list);
+//        }
+//        System.out.println(list);
+//
+//        list.add(666,3);
+//        System.out.println(list);
+//        list.remove(10);
+//        System.out.println(list);
+
+        LinkedListQueue<Integer> list = new LinkedListQueue<>();
         for (Integer i = 0 ;i < 10 ;i++){
-            list.addFirst(i);
+            list.enqueue(i);
             System.out.println(list);
         }
         System.out.println(list);
 
-        list.add(666,3);
+        list.enqueue(666);
         System.out.println(list);
-        list.remove(10);
+        list.dequeue();
         System.out.println(list);
 
     }

@@ -45,29 +45,76 @@ public class LinkedListQueue<E> implements Queue<E> {
         public Node(E e){
             this(e,null);
         }
+
+        @Override
+        public String toString() {
+            return e.toString();
+        }
     }
+
+    public LinkedListQueue() {
+        head = null;
+        tail = null;
+        size = 0 ;
+    }
+
     @Override
     public Integer getSize() {
-        return null;
+        return this.size;
     }
 
     @Override
     public Boolean isEmpty() {
-        return null;
+        return size==0;
     }
 
     @Override
     public void enqueue(E e) {
+        if (tail==null){
+            tail = new Node(e);
+            head = tail;
+        }else {
+            tail.next = new Node(e);
+            tail = tail.next;
+        }
 
+        size ++;
     }
 
     @Override
     public E dequeue() {
-        return null;
+        if (isEmpty()){
+            throw  new IllegalArgumentException("Not dequeue");
+        }
+        Node ret = head;
+        head = head.next;
+        ret.next = null;
+        if (head ==null){
+            tail = null;
+        }
+        size--;
+        return ret.e;
     }
 
     @Override
     public E getFront() {
-        return null;
+        if (isEmpty()){
+            throw  new IllegalArgumentException("Not dequeue");
+        }
+        return head.e;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Queue: ");
+        sb.append("front[");
+        Node curr = head;
+        while (curr!=null){
+            sb.append(curr).append("->");
+            curr = curr.next;
+        }
+        sb.append("Null ] tail ");
+        return sb.toString();
     }
 }
