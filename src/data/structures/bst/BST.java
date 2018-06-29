@@ -29,14 +29,14 @@ package data.structures.bst;
  */
 public class BST<E extends Comparable<E>> {
 
-    private class Node{
+    private class Node {
         E e;
-        Node left,right;
+        Node left, right;
 
         public Node(E e) {
             this.e = e;
-            left  =null;
-            right =null;
+            left = null;
+            right = null;
         }
     }
 
@@ -54,5 +54,25 @@ public class BST<E extends Comparable<E>> {
 
     public Boolean isEmpty() {
         return size == 0;
+    }
+
+    public void add(E e) {
+        root = add(root, e);
+    }
+
+    //递归
+    //返回插入新节点后的二分搜索树
+    private Node add(Node node, E e) {
+        if (node == null) {
+            size++;
+            return new Node(e);
+        } else {
+            if (node.e.compareTo(e) > 0) {
+                node.left = add(node.left, e);
+            } else if (node.e.compareTo(e) < 0) {
+                node.right = add(node.right, e);
+            }
+        }
+        return  node;
     }
 }
