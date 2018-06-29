@@ -132,5 +132,10 @@ public class BST<E extends Comparable<E>> {
             System.out.print(node.e+"->");
         }
     }
+    // 二分搜索树的分递归前序遍历
+    // TODO
+    public void preOrderNR(){
+
+    }
 
 }
