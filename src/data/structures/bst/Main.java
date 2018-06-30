@@ -46,8 +46,10 @@ public class Main {
         //////////////////
         bst.preOrder();
         System.out.println();
-        bst.order();
+//        bst.order();
+//        System.out.println();
+        bst.preOrderNR();
         System.out.println();
-        bst.sufOrder();
+        bst.levelOrder();
     }
 }

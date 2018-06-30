@@ -23,6 +23,10 @@ package data.structures.bst;
  * THE SOFTWARE.
  */
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-28 22:09
@@ -73,12 +77,12 @@ public class BST<E extends Comparable<E>> {
                 node.right = add(node.right, e);
             }
         }
-        return  node;
+        return node;
     }
 
     //看二分搜索树上是否包含元素
-    public boolean contains(E e){
-        return contains(root,e);
+    public boolean contains(E e) {
+        return contains(root, e);
     }
 
     private boolean contains(Node node, E e) {
@@ -89,53 +93,176 @@ public class BST<E extends Comparable<E>> {
                 return contains(node.left, e);
             } else if (node.e.compareTo(e) < 0) {
                 return contains(node.right, e);
-            }else {
+            } else {
                 return true;
             }
         }
     }
 
     //前序遍历 最自然的遍历方式  root -> 左子树 -> 右子树
-    public void preOrder(){
+    public void preOrder() {
         preOrder(root);
     }
 
-    private void preOrder(Node node){
-        if (node!=null){
-            System.out.print(node.e+"->");
+    private void preOrder(Node node) {
+        if (node != null) {
+            System.out.print(node.e + "->");
             preOrder(node.left);
             preOrder(node.right);
         }
     }
+
     //中序遍历 排序后 排序树  左子树 -> root -> 右子树
-    public void order(){
+    public void order() {
         order(root);
     }
 
-    private void order(Node node){
-        if (node!=null){
+    private void order(Node node) {
+        if (node != null) {
             order(node.left);
-            System.out.print(node.e+"->");
+            System.out.print(node.e + "->");
             order(node.right);
         }
     }
 
     //后序遍历     左子树 -> 右子树 -> root
-    public void sufOrder(){
-        suffOrder(root);
+    public void sufOrder() {
+        sufOrder(root);
     }
 
-    private void suffOrder(Node node){
-        if (node!=null){
-            suffOrder(node.left);
-            suffOrder(node.right);
-            System.out.print(node.e+"->");
+    private void sufOrder(Node node) {
+        if (node != null) {
+            sufOrder(node.left);
+            sufOrder(node.right);
+            System.out.print(node.e + "->");
         }
     }
-    // 二分搜索树的分递归前序遍历
-    // TODO
-    public void preOrderNR(){
 
+    // 二分搜索树的非分递归前序遍历
+    // TODO
+    public void preOrderNR() {
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            Node curr = stack.pop();
+            System.out.print(curr.e + "->");
+            if (curr.right != null) {
+                stack.push(curr.right);
+            }
+            if (curr.left != null) {
+                stack.push(curr.left);
+            }
+        }
     }
 
+    // 广度优先遍历 之前都是深度优先遍历方式
+    public void levelOrder() {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node curr = queue.remove();
+            System.out.print(curr.e + "->");
+            if (curr.left != null) {
+                queue.add(curr.left);
+            }
+            if (curr.right != null) {
+                queue.add(curr.right);
+            }
+        }
+    }
+
+    //寻找二分搜索树的最小元素
+    public E minimum() {
+        if (isEmpty()) throw new IllegalArgumentException("BST is empty.");
+        return minimum(root).e;
+    }
+
+    private Node minimum(Node node) {
+        if (node.left == null) return node;
+        return minimum(node.left);
+    }
+
+
+    //寻找二分搜索树的最大元素
+    public E maximum() {
+        if (isEmpty()) throw new IllegalArgumentException("BST is empty.");
+        return maximum(root).e;
+    }
+
+    private Node maximum(Node node) {
+        if (node.right == null) return node;
+        return maximum(node.right);
+    }
+
+    //删除最小元素 并返回元素
+    public E removeMin() {
+        E ret = minimum();
+        root = removeMin(root);
+        return ret;
+    }
+
+    private Node removeMin(Node node) {
+        if (node.left == null) {
+            Node right = node.right;
+            node.right = null;
+            size--;
+            return right;
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+
+    //删除最大元素 并返回元素
+    public E removeMax() {
+        E ret = maximum();
+        root = removeMax(root);
+        return ret;
+    }
+
+    private Node removeMax(Node node) {
+        if (node.right == null) {
+            Node left = node.left;
+            node.left = null;
+            size--;
+            return left;
+        }
+        node.right = removeMin(node.right);
+        return node;
+    }
+
+    //从二分搜索树中删除元素e
+    public void remove(E e) {
+        root = remove(root, e);
+    }
+
+    private Node remove(Node node, E e) {
+        if (node == null) return null;
+
+        if (node.e.compareTo(e) > 0) {
+            node.left = remove(node.left, e);
+            return node;
+        } else if (node.e.compareTo(e) < 0) {
+            node.right = remove(node.right, e);
+            return node;
+        } else {
+            if (node.left == null){
+                Node right = node.right;
+                node.right = null;
+                size--;
+                return right;
+            }
+            if (node.right ==null){
+                Node left = node.left;
+                node.left = null;
+                size--;
+                return left;
+            }
+            Node successor = minimum(node.right);
+            successor.right = removeMin(node.right);
+            successor.left=node.left;
+            node.left=node.right=null;
+            return successor;
+        }
+    }
 }
