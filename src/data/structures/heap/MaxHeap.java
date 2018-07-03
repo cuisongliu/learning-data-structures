@@ -73,4 +73,42 @@ public class MaxHeap<E extends Comparable<E>> {
         if (index < 0) throw new IllegalArgumentException("index is invalid.");
         return 2*index +2 ;
     }
+
+    public void add(E e){
+        array.addLast(e);
+        siftUp(array.getSize()-1);
+
+    }
+    //需要上浮的操作
+    private void siftUp(Integer index){
+        //若当前的值 大于父亲节点的值 则需要交换数据 完成大顶堆的数据结构
+        while (index > 0 &&  array.get(index).compareTo(array.get(parent(index))) > 0 ){
+            array.swap(index,parent(index));
+        }
+    }
+
+    //取出堆中最大元素
+    public E extractMax(){
+        E returnObj = array.get(0);
+        array.set(0,array.getLast());
+        array.removeLast();
+        //siftDown
+        siftDown(0);
+        //做堆性质的下沉操作
+        return returnObj;
+    }
+
+    //下沉操作
+    private void siftDown(Integer index){
+        //获取出左边孩子和右边孩子的节点索引
+        Integer leftIndex = leftChild(index);
+        Integer rightIndex =rightChild(index);
+        if (array.get(leftIndex).compareTo(array.get(index)) > 0 ){
+            array.swap(leftIndex,index);
+            siftDown(leftIndex);
+        }else if (array.get(rightIndex).compareTo(array.get(index))>0){
+            array.swap(rightIndex,index);
+            siftDown(rightIndex);
+        }
+    }
 }

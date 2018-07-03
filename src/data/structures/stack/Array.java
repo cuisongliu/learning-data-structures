@@ -167,6 +167,16 @@ public  class Array<E> {
         }
     }
 
+    //交换数据
+    public void swap(Integer a ,Integer b){
+        if (a < 0 || b <0 || a>=size || b>=size){
+            throw new IllegalArgumentException("Index is illegal.");
+        }
+        E e = get(a);
+        this.data[a] = this.data[b];
+        this.data[b] = e;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
