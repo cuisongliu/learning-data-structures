@@ -30,39 +30,50 @@ import java.util.Random;
  * @since 2018-07-04 下午1:51
  */
 public class Main {
+    private static void testHeap(Integer[] testData,boolean isHeapify,boolean isWhile){
+        long startTime = System.nanoTime();
+        MaxHeap<Integer> maxHeap =null;
+        if (isHeapify){
+            maxHeap=new MaxHeap<>(testData,isWhile);
+        }else {
+            maxHeap = new MaxHeap<>();
+            for (Integer o:testData){
+                maxHeap.add(o);
+            }
+        }
+//        int n = testData.length;
+//        Integer[] arr = new Integer[n];
+//        for (int i =0;i< n ;i++){
+//            if (isWhile){
+//                arr[i] = maxHeap.extractMaxWhile();
+//            }else {
+//                arr[i] = maxHeap.extractMax();
+//            }
+//        }
+//        for (int i =1;i< n ;i++)
+//            if (arr[i-1] < arr[i]){
+//                System.out.println("错误："+i+"err");
+//                break;
+//            }
+//        System.out.println("完成操作");
+        long endTime = System.nanoTime();
+        System.out.println("执行递归："+!isWhile+",isHeapify："+isHeapify+",执行时间为："+ ((endTime - startTime)/1000000000.0) );
+
+    }
     public static void main(String[] args) {
-//        MaxHeap<Integer> maxHeap = new MaxHeap<>();
-//        maxHeap.add(62);
-//        maxHeap.add(41);
-//        maxHeap.add(30);
-//        maxHeap.add(28);
-//        maxHeap.add(16);
-//        maxHeap.add(22);
-//        maxHeap.add(13);
-//        maxHeap.add(19);
-//        maxHeap.add(17);
-//        maxHeap.add(15);
-//        System.out.println(maxHeap);
-//        System.out.println(maxHeap.extractMax());
-//        System.out.println(maxHeap);
-        int n = 1000000;
-        MaxHeap<Integer> maxHeap = new MaxHeap<>();
+        //判断是否正确
+        int n = 10000000;
+        Integer[] testDate = new Integer[n];
         Random random = new Random();
         for (int i =0;i< n ;i++){
-            maxHeap.add(random.nextInt(Integer.MAX_VALUE));
+            testDate[i] = random.nextInt(Integer.MAX_VALUE);
         }
-//        int n = maxHeap.getSize();
-        Integer[] arr = new Integer[n];
-        for (int i =0;i< n ;i++)
-            arr[i] = maxHeap.extractMax();
-//        for (int i =0;i< n ;i++)
-//         System.out.print(arr[i]+",");
-        for (int i =1;i< n ;i++)
-            if (arr[i-1] < arr[i]){
-                System.out.println(i+"err");
-                break;
-            }
+        testHeap(testDate,false,true);
+        testHeap(testDate,true,true);
 
-        System.out.println("success");
+        testHeap(testDate,false,false);
+        testHeap(testDate,true,false);
+
+
     }
 }

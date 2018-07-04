@@ -42,6 +42,16 @@ public class MaxHeap<E extends Comparable<E>> {
         array = new Array<>();
     }
 
+    public MaxHeap(E[] arr,Boolean isWhile){
+        array = new Array<>(arr);
+        //找到最后一个非叶子节点
+        for (int i =parent(arr.length-1);i>=0;i--){
+            if (isWhile)
+                siftDownWhile(i);
+            else
+                siftDown(i);
+        }
+    }
     public Integer getCapacity() {
         return array.getCapacity();
     }
@@ -98,8 +108,28 @@ public class MaxHeap<E extends Comparable<E>> {
         //做堆性质的下沉操作
         return returnObj;
     }
+    public E extractMaxWhile(){
+        E returnObj = array.get(0);
+        array.set(0,array.getLast());
+        array.removeLast();
+        //siftDown
+        siftDownWhile(0);
+        //做堆性质的下沉操作
+        return returnObj;
+    }
+    //取出堆中最大元素 并且替换成元素e
+    public E replace(E e){
+        E returnObj = array.get(0);
+        array.set(0,e);
+        //siftDown
+        siftDown(0);
+        //做堆性质的下沉操作
+        return returnObj;
+    }
+    //如何计算最后一个非叶子节点的index？？ 获取最后一个值的父亲节点
+
     //0 自己  1 left 2 right
-    Integer getMaxNode(Integer index){
+    private Integer getMaxNode(Integer index){
         Integer leftIndex = leftChild(index);
         Integer rightIndex =rightChild(index);
         //没有了孩子结点
@@ -137,6 +167,19 @@ public class MaxHeap<E extends Comparable<E>> {
             //右边
             array.swap(rightIndex,index);
             siftDown(rightIndex);
+        }
+    }
+
+    private void siftDownWhile(Integer index){
+        while (leftChild(index)<array.getSize()){
+            int j = leftChild(index);
+            if (j+1 < array.getSize()&& array.get(j+1).compareTo(array.get(j))>0){
+                j=rightChild(index);
+            }
+            //array[j] 是左右中最大值
+            if (array.get(index).compareTo(array.get(j))>=0)break;
+            array.swap(index,j);
+            index = j;
         }
     }
 
