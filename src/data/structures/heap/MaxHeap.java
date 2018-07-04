@@ -84,6 +84,7 @@ public class MaxHeap<E extends Comparable<E>> {
         //若当前的值 大于父亲节点的值 则需要交换数据 完成大顶堆的数据结构
         while (index > 0 &&  array.get(index).compareTo(array.get(parent(index))) > 0 ){
             array.swap(index,parent(index));
+            index = parent(index);
         }
     }
 
@@ -99,16 +100,30 @@ public class MaxHeap<E extends Comparable<E>> {
     }
 
     //下沉操作
+
     private void siftDown(Integer index){
         //获取出左边孩子和右边孩子的节点索引
         Integer leftIndex = leftChild(index);
+        if (leftIndex > array.getSize()-1) return;
         Integer rightIndex =rightChild(index);
-        if (array.get(leftIndex).compareTo(array.get(index)) > 0 ){
-            array.swap(leftIndex,index);
-            siftDown(leftIndex);
-        }else if (array.get(rightIndex).compareTo(array.get(index))>0){
-            array.swap(rightIndex,index);
-            siftDown(rightIndex);
+        if (rightIndex > array.getSize()-1) return;
+        //若左子树大于右子树
+        if (!(array.get(leftIndex).compareTo(array.get(index)) < 0 && array.get(rightIndex).compareTo(array.get(index)) < 0)){
+            if (array.get(leftIndex).compareTo(array.get(rightIndex)) > 0 ){
+                array.swap(leftIndex,index);
+                siftDown(leftIndex);
+            }else if (array.get(rightIndex).compareTo(array.get(leftIndex))>0){
+                array.swap(rightIndex,index);
+                siftDown(rightIndex);
+            }
         }
+
+    }
+
+    @Override
+    public String toString() {
+        return "MaxHeap{" +
+                "array=" + array +
+                '}';
     }
 }
