@@ -98,26 +98,46 @@ public class MaxHeap<E extends Comparable<E>> {
         //做堆性质的下沉操作
         return returnObj;
     }
+    //0 自己  1 left 2 right
+    Integer getMaxNode(Integer index){
+        Integer leftIndex = leftChild(index);
+        Integer rightIndex =rightChild(index);
+        //没有了孩子结点
+        if (leftIndex > array.getSize()-1 && rightIndex > array.getSize()-1) return 0;
+        //没有了右孩子结点
+        if (rightIndex > array.getSize()-1){
+            //左孩子大于自己
+            if (array.get(leftIndex).compareTo(array.get(index)) > 0) return 1;
+            //自己大于左孩子
+            return 0;
+        }
+        //左右都有的情况
+        //1 左右孩子都比自己小
+        if (array.get(index).compareTo(array.get(rightIndex)) > 0 && array.get(index).compareTo(array.get(leftIndex)) > 0)return 0;
+        //左孩子大于右孩子
+        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) > 0 ) return 1;
+        //右孩子大于左孩子
+        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) < 0 ) return 2;
+        //左右相等返回左
+        return 1;
+    }
 
     //下沉操作
-
     private void siftDown(Integer index){
         //获取出左边孩子和右边孩子的节点索引
         Integer leftIndex = leftChild(index);
-        if (leftIndex > array.getSize()-1) return;
         Integer rightIndex =rightChild(index);
-        if (rightIndex > array.getSize()-1) return;
-        //若左子树大于右子树
-        if (!(array.get(leftIndex).compareTo(array.get(index)) < 0 && array.get(rightIndex).compareTo(array.get(index)) < 0)){
-            if (array.get(leftIndex).compareTo(array.get(rightIndex)) > 0 ){
-                array.swap(leftIndex,index);
-                siftDown(leftIndex);
-            }else if (array.get(rightIndex).compareTo(array.get(leftIndex))>0){
-                array.swap(rightIndex,index);
-                siftDown(rightIndex);
-            }
+        Integer nodeIndex =  getMaxNode(index);//判断3个节点谁最大
+        if (nodeIndex ==1){
+            //左边
+            array.swap(leftIndex,index);
+            siftDown(leftIndex);
         }
-
+        if (nodeIndex ==2){
+            //右边
+            array.swap(rightIndex,index);
+            siftDown(rightIndex);
+        }
     }
 
     @Override

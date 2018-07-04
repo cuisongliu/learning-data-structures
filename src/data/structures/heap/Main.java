@@ -45,21 +45,21 @@ public class Main {
 //        System.out.println(maxHeap);
 //        System.out.println(maxHeap.extractMax());
 //        System.out.println(maxHeap);
-        int n = 10;
+        int n = 1000000;
         MaxHeap<Integer> maxHeap = new MaxHeap<>();
         Random random = new Random();
         for (int i =0;i< n ;i++){
-            maxHeap.add(random.nextInt(100000));
+            maxHeap.add(random.nextInt(Integer.MAX_VALUE));
         }
 //        int n = maxHeap.getSize();
         Integer[] arr = new Integer[n];
         for (int i =0;i< n ;i++)
             arr[i] = maxHeap.extractMax();
-        for (int i =0;i< n ;i++)
-         System.out.print(arr[i]+",");
+//        for (int i =0;i< n ;i++)
+//         System.out.print(arr[i]+",");
         for (int i =1;i< n ;i++)
             if (arr[i-1] < arr[i]){
-                System.out.println("err");
+                System.out.println(i+"err");
                 break;
             }
 
