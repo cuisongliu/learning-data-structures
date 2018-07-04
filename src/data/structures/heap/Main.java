@@ -41,38 +41,38 @@ public class Main {
                 maxHeap.add(o);
             }
         }
-//        int n = testData.length;
-//        Integer[] arr = new Integer[n];
-//        for (int i =0;i< n ;i++){
-//            if (isWhile){
-//                arr[i] = maxHeap.extractMaxWhile();
-//            }else {
-//                arr[i] = maxHeap.extractMax();
-//            }
-//        }
-//        for (int i =1;i< n ;i++)
-//            if (arr[i-1] < arr[i]){
-//                System.out.println("错误："+i+"err");
-//                break;
-//            }
-//        System.out.println("完成操作");
+        int n = testData.length;
+        Integer[] arr = new Integer[n];
+        for (int i =0;i< n ;i++){
+            if (isWhile){
+                arr[i] = maxHeap.extractMaxWhile();
+            }else {
+                arr[i] = maxHeap.extractMax();
+            }
+        }
+        for (int i =1;i< n ;i++)
+            if (arr[i-1] < arr[i]){
+                System.out.println("错误："+i+"err");
+                break;
+            }
+        System.out.println("完成操作");
         long endTime = System.nanoTime();
         System.out.println("执行递归："+!isWhile+",isHeapify："+isHeapify+",执行时间为："+ ((endTime - startTime)/1000000000.0) );
 
     }
     public static void main(String[] args) {
         //判断是否正确
-        int n = 10000000;
+        int n = 1000000;
         Integer[] testDate = new Integer[n];
         Random random = new Random();
         for (int i =0;i< n ;i++){
             testDate[i] = random.nextInt(Integer.MAX_VALUE);
         }
         testHeap(testDate,false,true);
-        testHeap(testDate,true,true);
-
-        testHeap(testDate,false,false);
-        testHeap(testDate,true,false);
+//        testHeap(testDate,true,true);
+//
+//        testHeap(testDate,false,false);
+//        testHeap(testDate,true,false);
 
 
     }

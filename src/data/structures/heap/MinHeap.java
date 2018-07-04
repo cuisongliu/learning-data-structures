@@ -26,23 +26,23 @@ package data.structures.heap;
 import data.structures.stack.Array;
 
 /**
- * 最大堆
+ * 最小堆
  *
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-06-30 21:44
  */
-public class MaxHeap<E extends Comparable<E>> {
+public class MinHeap<E extends Comparable<E>> {
     private Array<E> array;
 
-    public MaxHeap(Integer capacity) {
+    public MinHeap(Integer capacity) {
         array = new Array<>(capacity);
     }
 
-    public MaxHeap() {
+    public MinHeap() {
         array = new Array<>();
     }
 
-    public MaxHeap(E[] arr,Boolean isWhile){
+    public MinHeap(E[] arr, Boolean isWhile){
         array = new Array<>(arr);
         //找到最后一个非叶子节点
         for (int i =parent(arr.length-1);i>=0;i--){
@@ -89,23 +89,23 @@ public class MaxHeap<E extends Comparable<E>> {
         siftUp(array.getSize()-1);
 
     }
-    //需要上浮的操作
+    //需要上浮的操作 越小越顶
     private void siftUp(Integer index){
         //若当前的值 大于父亲节点的值 则需要交换数据 完成大顶堆的数据结构
-        while (index > 0 &&  array.get(index).compareTo(array.get(parent(index))) > 0 ){
+        while (index > 0 &&  array.get(index).compareTo(array.get(parent(index))) < 0 ){
             array.swap(index,parent(index));
             index = parent(index);
         }
     }
-    public E findMax(){
+    public E findMin(){
         if (isEmpty()){
             throw new IllegalArgumentException("maxheap is empty.");
         }
         return array.get(0);
     }
-    //取出堆中最大元素
-    public E extractMax(){
-        E returnObj = findMax();
+    //取出堆中最小元素
+    public E extractMin(){
+        E returnObj = findMin();
         array.set(0,array.getLast());
         array.removeLast();
         //siftDown
@@ -113,8 +113,8 @@ public class MaxHeap<E extends Comparable<E>> {
         //做堆性质的下沉操作
         return returnObj;
     }
-    public E extractMaxWhile(){
-        E returnObj = findMax();
+    public E extractMinWhile(){
+        E returnObj = findMin();
         array.set(0,array.getLast());
         array.removeLast();
         //siftDown
@@ -122,9 +122,9 @@ public class MaxHeap<E extends Comparable<E>> {
         //做堆性质的下沉操作
         return returnObj;
     }
-    //取出堆中最大元素 并且替换成元素e
+    //取出堆中最小元素 并且替换成元素e
     public E replace(E e){
-        E returnObj = findMax();
+        E returnObj = findMin();
         array.set(0,e);
         //siftDown
         siftDown(0);
@@ -133,12 +133,13 @@ public class MaxHeap<E extends Comparable<E>> {
     }
     //如何计算最后一个非叶子节点的index？？ 获取最后一个值的父亲节点
 
+
     //下沉操作
     private void siftDown(Integer index){
         //获取出左边孩子和右边孩子的节点索引
         Integer leftIndex = leftChild(index);
         Integer rightIndex =rightChild(index);
-        Integer nodeIndex =  getMaxNode(index);//判断3个节点谁最大
+        Integer nodeIndex =  getMinNode(index);//判断3个节点谁最小
         if (nodeIndex ==1){
             //左边
             array.swap(leftIndex,index);
@@ -150,50 +151,30 @@ public class MaxHeap<E extends Comparable<E>> {
             siftDown(rightIndex);
         }
     }
-    //0 自己  1 left 2 right
-    private Integer getMaxNode(Integer index){
+    private Integer getMinNode(Integer index){
         Integer leftIndex = leftChild(index);
         Integer rightIndex =rightChild(index);
         Integer compareIndex = leftIndex;
-        //如果右孩子比左孩子大 则切换待比较索引
-        if (rightIndex < array.getSize()-1 && array.get(leftIndex).compareTo(array.get(rightIndex)) < 0) {
+        //如果右孩子比左孩子小 则切换待比较索引
+        if (rightIndex < array.getSize()-1 && array.get(leftIndex).compareTo(array.get(rightIndex)) > 0) {
             compareIndex = rightIndex;
         }
         //比较需要比较的索引和父节点比较数据即可
-        if (array.get(index).compareTo(array.get(compareIndex))<0)  {
+        if (array.get(index).compareTo(array.get(compareIndex))> 0)  {
             if (compareIndex .equals(leftIndex)) return 1;
             return 2;
         }else {
             return 0;
         }
-
-//        //没有了孩子结点
-//        if (leftIndex > array.getSize()-1 && rightIndex > array.getSize()-1) return 0;
-//        //没有了右孩子结点
-//        if (rightIndex > array.getSize()-1){
-//            //左孩子大于自己
-//            if (array.get(leftIndex).compareTo(array.get(index)) > 0) return 1;
-//            //自己大于左孩子
-//            return 0;
-//        }
-//        //左右都有的情况
-//        //1 左右孩子都比自己小
-//        if (array.get(index).compareTo(array.get(rightIndex)) > 0 && array.get(index).compareTo(array.get(leftIndex)) > 0)return 0;
-//        //左孩子大于右孩子
-//        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) > 0 ) return 1;
-//        //右孩子大于左孩子
-//        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) < 0 ) return 2;
-//        //左右相等返回左
-//        return 1;
     }
     private void siftDownWhile(Integer index){
         while (leftChild(index)<array.getSize()){
             int j = leftChild(index);
-            if (j+1 < array.getSize()&& array.get(j+1).compareTo(array.get(j))>0){
+            if (j+1 < array.getSize()&& array.get(j+1).compareTo(array.get(j))<0){
                 j=rightChild(index);
             }
             //array[j] 是左右中最大值
-            if (array.get(index).compareTo(array.get(j))>=0)break;
+            if (array.get(index).compareTo(array.get(j))<=0)break;
             array.swap(index,j);
             index = j;
         }
