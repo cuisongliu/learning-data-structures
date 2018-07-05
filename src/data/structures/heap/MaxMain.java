@@ -29,8 +29,8 @@ import java.util.Random;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-07-04 下午1:51
  */
-public class Main {
-    private static void testHeap(Integer[] testData,boolean isHeapify,boolean isWhile){
+public class MaxMain {
+    private static void testMaxHeap(Integer[] testData, boolean isHeapify, boolean isWhile){
         long startTime = System.nanoTime();
         MaxHeap<Integer> maxHeap =null;
         if (isHeapify){
@@ -62,17 +62,18 @@ public class Main {
     }
     public static void main(String[] args) {
         //判断是否正确
-        int n = 1000000;
+        int n = 10;
         Integer[] testDate = new Integer[n];
         Random random = new Random();
         for (int i =0;i< n ;i++){
             testDate[i] = random.nextInt(Integer.MAX_VALUE);
         }
-        testHeap(testDate,false,true);
-//        testHeap(testDate,true,true);
+        testMaxHeap(testDate,false,false);
+//        testMaxHeap(testDate,true,true);
 //
-//        testHeap(testDate,false,false);
-//        testHeap(testDate,true,false);
+//        testMaxHeap(testDate,false,false);
+//        testMaxHeap(testDate,true,false);
+
 
 
     }

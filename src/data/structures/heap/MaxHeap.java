@@ -150,41 +150,29 @@ public class MaxHeap<E extends Comparable<E>> {
             siftDown(rightIndex);
         }
     }
+
     //0 自己  1 left 2 right
     private Integer getMaxNode(Integer index){
         Integer leftIndex = leftChild(index);
         Integer rightIndex =rightChild(index);
-        Integer compareIndex = leftIndex;
-        //如果右孩子比左孩子大 则切换待比较索引
-        if (rightIndex < array.getSize()-1 && array.get(leftIndex).compareTo(array.get(rightIndex)) < 0) {
-            compareIndex = rightIndex;
-        }
-        //比较需要比较的索引和父节点比较数据即可
-        if (array.get(index).compareTo(array.get(compareIndex))<0)  {
-            if (compareIndex .equals(leftIndex)) return 1;
-            return 2;
-        }else {
+        //没有了孩子结点
+        if (leftIndex > array.getSize()-1 && rightIndex > array.getSize()-1) return 0;
+        //没有了右孩子结点
+        if (rightIndex > array.getSize()-1){
+        //左孩子大于自己
+            if (array.get(leftIndex).compareTo(array.get(index)) > 0) return 1;
+        // 自己大于左孩子
             return 0;
         }
-
-//        //没有了孩子结点
-//        if (leftIndex > array.getSize()-1 && rightIndex > array.getSize()-1) return 0;
-//        //没有了右孩子结点
-//        if (rightIndex > array.getSize()-1){
-//            //左孩子大于自己
-//            if (array.get(leftIndex).compareTo(array.get(index)) > 0) return 1;
-//            //自己大于左孩子
-//            return 0;
-//        }
-//        //左右都有的情况
-//        //1 左右孩子都比自己小
-//        if (array.get(index).compareTo(array.get(rightIndex)) > 0 && array.get(index).compareTo(array.get(leftIndex)) > 0)return 0;
-//        //左孩子大于右孩子
-//        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) > 0 ) return 1;
-//        //右孩子大于左孩子
-//        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) < 0 ) return 2;
-//        //左右相等返回左
-//        return 1;
+        // 左右都有的情况
+        // 1 左右孩子都比自己小
+        if (array.get(index).compareTo(array.get(rightIndex)) > 0 && array.get(index).compareTo(array.get(leftIndex)) > 0)return 0;
+        //  左孩子大于右孩子
+        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) > 0 ) return 1;
+        //  右孩子大于左孩子
+        if ( array.get(leftIndex).compareTo(array.get(rightIndex)) < 0 ) return 2;
+        //  左右相等返回左
+        return 1;
     }
     private void siftDownWhile(Integer index){
         while (leftChild(index)<array.getSize()){
