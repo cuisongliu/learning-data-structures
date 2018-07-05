@@ -101,6 +101,24 @@ public class SegmentTree<E> {
         if (index < 0) throw new IllegalArgumentException("index is invalid.");
         return index*2 +2;
     }
+
+    public void set(int index,E e){
+        if (index > data.length-1 || index < 0 ) throw new IllegalArgumentException("index l is invalidate.");
+        data[index] = e ;
+        set(0,0,data.length-1,index,e);
+    }
+    public void set(int treeIndex,int l ,int r,int index,E e ){
+        if (l == r ){
+            tree[treeIndex] = e ;
+            return;
+        }
+        int mid = l +(r-l)/2;
+        int leftIndex = leftChild(treeIndex);
+        int rightIndex = rightChild(treeIndex);
+        if (index >= mid +1 )  set(rightIndex,mid +1,r,index,e);
+        if (index <= mid)  set(leftIndex,l,mid,index,e);
+        tree[treeIndex] = merger.merger(tree[leftIndex],tree[leftIndex]);
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
