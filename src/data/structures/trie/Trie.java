@@ -83,4 +83,16 @@ public class Trie {
         }
         return curr.isWord;
     }
+    // 查询是否在Trie中有单词以prefix为前缀
+    public boolean isPrefix(String prefix){
+        Node curr = root;
+        for (int i =0; i < prefix.length();i++){
+            char c = prefix.charAt(i);
+            if (!curr.next.containsKey(c)){
+                return false;
+            }
+            curr = curr.next.get(c);
+        }
+        return true;
+    }
 }
