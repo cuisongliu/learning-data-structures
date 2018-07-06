@@ -75,11 +75,11 @@ public class TrieSum {
     }
 
     private int sum(Node node){
-//        if (node.next==null) return 0;
-//        for (Character c : node.next.keySet()){
-//            sum(node.next.get(c))
-//        }
-        return 0;
+        Integer res = node.value;
+        for (Character c : node.next.keySet()){
+            res += (sum(node.next.get(c)));
+        }
+        return res;
     }
 
 }
