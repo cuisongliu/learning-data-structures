@@ -31,33 +31,25 @@ import java.util.HashMap;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-07-06 下午1:01
  */
-public class Trie {
+public class TrieSum {
     private class Node{
-        private Boolean isWord;
+        private Integer value;
         private HashMap<Character,Node> next;
-
-        public Node(Boolean isWord) {
-            this.isWord = isWord;
+        public Node( Integer value) {
             this.next = new HashMap<>();
         }
 
         public Node() {
-            this(false);
+            this(0);
         }
     }
     private Node root;
-    private int size;
 
-    public Trie() {
+    public TrieSum() {
         root = new Node();
-        size =0;
-    }
-    //或得trie树中存储单词的数量
-    public Integer getSize(){
-        return size;
     }
     //添加一个新的单词
-    public void add(String word){
+    public void add(String word,int value){
         Node curr = root;
         for (int i =0; i < word.length();i++){
             char c = word.charAt(i);
@@ -66,55 +58,28 @@ public class Trie {
             }
             curr = curr.next.get(c);
         }
-        if (!curr.isWord){
-            curr.isWord=true;
-            size++;
-        }
-    }
-    //查询单词
-    public Boolean contains(String word){
-        Node curr = root;
-        for (int i =0; i < word.length();i++){
-            char c = word.charAt(i);
-            if (!curr.next.containsKey(c)){
-               return false;
-            }
-            curr = curr.next.get(c);
-        }
-        return curr.isWord;
-    }
-    // 搜索单词 但是可以使用.  代表任意字符
-    public Boolean search(String word){
-        return match(root,word,0);
+        curr.value = value;
     }
 
-    private boolean match(Node node,String word,Integer index){
-        if (index==word.length())return node.isWord;
-        char c = word.charAt(index);
-        if (c!='.'){
-            if (!node.next.containsKey(c)){
-                return false;
-            }else {
-                return match(node.next.get(c),word,index+1);
-            }
-        }else {
-            for (char nextChar: node.next.keySet()){
-                if (match(node.next.get(nextChar),word,index+1)) return true;
-            }
-            return false;
-        }
-    }
-
-    // 查询是否在Trie中有单词以prefix为前缀
-    public boolean isPrefix(String prefix){
-        Node curr = root;
+    public int sum(String prefix){
+       Node curr = root;
         for (int i =0; i < prefix.length();i++){
             char c = prefix.charAt(i);
             if (!curr.next.containsKey(c)){
-                return false;
+                return 0;
             }
             curr = curr.next.get(c);
         }
-        return true;
+
+        return sum(curr);
     }
+
+    private int sum(Node node){
+//        if (node.next==null) return 0;
+//        for (Character c : node.next.keySet()){
+//            sum(node.next.get(c))
+//        }
+        return 0;
+    }
+
 }
