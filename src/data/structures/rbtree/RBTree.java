@@ -71,10 +71,11 @@ public class RBTree <E extends Comparable<E>> {
 
     public void add(E e) {
         root = add(root, e);
+        root.color = BLACK;
     }
 
     //递归
-    //返回插入新节点后的二分搜索树
+    //返回插入新节点后的红黑树树
     private Node add(Node node, E e) {
         if (node == null) {
             size++;
@@ -86,7 +87,58 @@ public class RBTree <E extends Comparable<E>> {
                 node.right = add(node.right, e);
             }
         }
+
+        if (isRed(node.right) && !isRed(node.left)){
+            //需要左旋转
+            node = leftRotate(node);
+        }
+        if (isRed(node.left) && isRed(node.left.left)){
+            //需要左旋转
+            node = rightRotate(node);
+        }
+        if (isRed(node.right) && isRed(node.left)){
+            //需要颜色翻转
+           flipColors(node);
+        }
         return node;
+    }
+    // 对结点Y 向左旋转 返回旋转后的新结点
+    //         node                                   x
+    //        / \                                   /  \
+    //       T1 x     向左旋转(node)              node  T3
+    //         / \    ---------->                /\
+    //       T2  T3                            T1 T2
+    private Node leftRotate(Node node){
+        Node x = node.right;
+        //左旋转
+        node.right= x.left;
+        x.left = node;
+        //颜色设置
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+    // 对结点Y 向右旋转 返回旋转后的新结点
+    //         node                                   x
+    //        / \                                   /   \
+    //       x  T2     向右旋转(y)                  y    node
+    //      / \        --------->                        / \
+    //     y  T1                                        T1 T2
+    private Node rightRotate( Node node){
+        Node x = node.left;
+       //右旋转
+        node.left = x.right;
+        x.right = node;
+        //颜色设置
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+    //颜色翻转
+    private void flipColors(Node node ){
+        node.color = RED;
+        node.left.color=BLACK;
+        node.right.color=BLACK;
     }
 
     //看二分搜索树上是否包含元素
